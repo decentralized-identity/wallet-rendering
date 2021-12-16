@@ -85,6 +85,57 @@ An _Entity Style Descriptor_ ****must**** be an object composed of the following
 - The object ****MAY**** contain a `text` property, and if present, its value ****MUST**** be an object with the following optional properties:
     - The object ****MAY**** contain a `color` property, and if present its value ****MUST**** be a HEX string color value (e.g. #000000).
 
+### JSON Schema
+
+::: example Credential Application - Schema
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Entity Styles",
+  "type": "object",
+  "definitions": {
+    "image": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "alt": {
+          "type": "string"
+        },
+        "required": ["uri", "alt"]
+      }
+    },
+    "color": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        },
+        "required": ["color"]
+      }
+    }
+  },
+  "properties": {
+    "thumbnail": {
+      "$ref": "#/definitions/image"
+    },
+    "hero": {
+      "$ref": "#/definitions/image"
+    },
+    "background": {
+      "$ref": "#/definitions/color"
+    },
+    "text": {
+      "$ref": "#/definitions/color"
+    }
+  }
+}
+```
+:::
+
 ## Data Display
 
 A _Data Display Descriptor_ ****must**** be an object composed of the following properties:
@@ -96,43 +147,6 @@ A _Data Display Descriptor_ ****must**** be an object composed of the following 
 
 ### Display Mapping Object
 
-::: example Display Mapping Object
-```json
-{
-  "display": {
-    "title": {
-      "path": ["$.name", "$.vc.name"],
-      "fallback": "Washington State Driver License"
-    },
-    "properties": [
-      {
-        "path": ["$.issuanceDate", "$.vc.issuanceDate"],
-        "schema": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "label": "Issuance Date"
-      },
-      {
-        "path": ["$.vision_aid", "$.vc.vision_aid"],
-        "schema": {
-          "type": "boolean"
-        },
-        "label": "Vision aid required"
-      },
-      {
-        "path": ["$.donor", "$.vc.donor"],
-        "schema": {
-          "type": "boolean"
-        },
-        "label": "Organ Donor"
-      }
-    ]
-  }
-}
-```
-:::
-
 [[ref:Display Mapping Objects]] can be used to either pull data from the target Claim with the `path` property OR display infomation about the target Claim with the `text` property
 
 #### Using `path`
@@ -140,21 +154,11 @@ A _Data Display Descriptor_ ****must**** be an object composed of the following 
 :::example Display Mapping Object with path
 ```json
 {
-  "title": {
-    "path": ["$.name", "$.vc.name"],
-    "schema": {
-      "type": "string"
-    },
-    "fallback": "Washington State Driver License"
+  "path": ["$.name", "$.vc.name"],
+  "schema": {
+    "type": "string"
   },
-  "subtitle": {
-    "path": ["$.issuanceDate", "$.vc.issuanceDate"],
-    "schema": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "fallback": "Issuance Date Unknown"
-  }
+  "fallback": "Washington State Driver License"
 }
 ```
 :::
@@ -191,11 +195,199 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 :::example Display Mapping Object with text
 ```json
 {
-  "title": {
-    "text": "Washington State Driver License"
-  }
+  "text": "Washington State Driver License"
 }
 ```
 :::
 
 - The object ****MUST**** contain a `text` property and its value ****MUST**** be a string value
+
+#### JSON Schema
+
+::: example Display Mapping Object - Schema
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Display Mapping Object",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["boolean", "number", "integer"]
+                }
+              },
+              "required": ["type"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["string"]
+                },
+                "format": {
+                  "type": "string",
+                  "enum": ["date-time", "time", "date", "email", "idn-email", "hostname", "idn-hostname", "ipv4", "ipv6", "uri", "uri-reference", "iri", "iri-reference"]
+                },
+              },
+              "required": ["type"]
+            }
+          ]
+        },
+        "fallback": {
+          "type": "string",
+        }
+      },
+      "required": ["path", "schema"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": ["text"]
+    }
+  ],
+}
+```
+:::
+
+### Labeled Display Mapping Object
+
+<tab-panels selected-index="0">
+
+<nav>
+  <button type="button">With Path</button>
+  <button type="button">With Text</button>
+</nav>
+
+<section>
+
+:::example Labeled Display Mapping Object with path
+```json
+{
+    "label": "Issuance Date",
+    "path": ["$.issuanceDate", "$.vc.issuanceDate"],
+    "schema": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "fallback": "Unknown"
+}
+```
+:::
+
+</section>
+
+<section>
+
+:::example Labeled Display Mapping Object with text
+```json
+{
+    "label": "Description",
+    "text": "License to operate a vehicle with a gross combined weight rating (GCWR) of 26,001 or more pounds, as long as the GVWR of the vehicle(s) being towed is over 10,000 pounds."
+}
+```
+:::
+
+</section>
+
+</tab-panels>
+
+[[ref:Labeled Display Mapping Objects]] act the same and have the same requirements as [[ref:Display Mapping Objects]], with the addition of a `label` property
+
+- The object ****MUST**** contain a `label` property and its value must be string.
+
+#### JSON Schema
+
+::: example Labeled Display Mapping Object - Schema
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Labeled Display Mapping Object",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "schema": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["boolean", "number", "integer"]
+                }
+              },
+              "required": ["type"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["string"]
+                },
+                "format": {
+                  "type": "string",
+                  "enum": ["date-time", "time", "date", "email", "idn-email", "hostname", "idn-hostname", "ipv4", "ipv6", "uri", "uri-reference", "iri", "iri-reference"]
+                }
+              },
+              "required": ["type"]
+            }
+          ]
+        },
+        "fallback": {
+          "type": "string",
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": ["path", "schema", "label"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        }
+      },
+      "required": ["text", "label"]
+    }
+  ],
+}
+```
+:::
+
+## References
+
+[[spec]]
