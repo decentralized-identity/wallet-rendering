@@ -85,57 +85,6 @@ An _Entity Style Descriptor_ ****must**** be an object composed of the following
 - The object ****MAY**** contain a `text` property, and if present, its value ****MUST**** be an object with the following optional properties:
     - The object ****MAY**** contain a `color` property, and if present its value ****MUST**** be a HEX string color value (e.g. #000000).
 
-### JSON Schema
-
-::: example Credential Application - Schema
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Entity Styles",
-  "type": "object",
-  "definitions": {
-    "image": {
-      "type": "object",
-      "properties": {
-        "uri": {
-          "type": "string",
-          "format": "uri"
-        },
-        "alt": {
-          "type": "string"
-        },
-        "required": ["uri", "alt"]
-      }
-    },
-    "color": {
-      "type": "object",
-      "properties": {
-        "color": {
-          "type": "string",
-          "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
-        },
-        "required": ["color"]
-      }
-    }
-  },
-  "properties": {
-    "thumbnail": {
-      "$ref": "#/definitions/image"
-    },
-    "hero": {
-      "$ref": "#/definitions/image"
-    },
-    "background": {
-      "$ref": "#/definitions/color"
-    },
-    "text": {
-      "$ref": "#/definitions/color"
-    }
-  }
-}
-```
-:::
-
 ## Data Display
 
 A _Data Display Descriptor_ ****must**** be an object composed of the following properties:
@@ -202,73 +151,6 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 - The object ****MUST**** contain a `text` property and its value ****MUST**** be a string value
 
-#### JSON Schema
-
-::: example Display Mapping Object - Schema
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Display Mapping Object",
-  "oneOf": [
-    {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "path": {
-          "type": "array",
-          "items": {"type": "string"}
-        },
-        "schema": {
-          "oneOf": [
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": ["boolean", "number", "integer"]
-                }
-              },
-              "required": ["type"]
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": ["string"]
-                },
-                "format": {
-                  "type": "string",
-                  "enum": ["date-time", "time", "date", "email", "idn-email", "hostname", "idn-hostname", "ipv4", "ipv6", "uri", "uri-reference", "iri", "iri-reference"]
-                },
-              },
-              "required": ["type"]
-            }
-          ]
-        },
-        "fallback": {
-          "type": "string",
-        }
-      },
-      "required": ["path", "schema"]
-    },
-    {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "text": {
-          "type": "string"
-        }
-      },
-      "required": ["text"]
-    }
-  ],
-}
-```
-:::
-
 ### Labeled Display Mapping Object
 
 <tab-panels selected-index="0">
@@ -315,76 +197,37 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 - The object ****MUST**** contain a `label` property and its value must be string.
 
-#### JSON Schema
+## JSON Schemas
+
+### Vocabulary Definition
+
+The _Presentation Exchange_ specification adopts and defines the following JSON
+Schema data format and processing variant, which implementers ****MUST****
+support for evaluation of the portions of the _Presentation Exchange_
+specification that call for JSON Schema validation:
+https://tools.ietf.org/html/draft-handrews-json-schema-02
+
+### Entity Styles
+
+::: example Credential Application - Schema
+```json
+[[insert: ./schemas/entity-styles.json]]
+```
+:::
+
+### Display Mapping Object
+
+::: example Display Mapping Object - Schema
+```json
+[[insert: ./schemas/display-mapping-object.json]]
+```
+:::
+
+### Labeled Display Mapping Object
 
 ::: example Labeled Display Mapping Object - Schema
 ```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Labeled Display Mapping Object",
-  "oneOf": [
-    {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "path": {
-          "type": "array",
-          "items": {"type": "string"}
-        },
-        "schema": {
-          "oneOf": [
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": ["boolean", "number", "integer"]
-                }
-              },
-              "required": ["type"]
-            },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": ["string"]
-                },
-                "format": {
-                  "type": "string",
-                  "enum": ["date-time", "time", "date", "email", "idn-email", "hostname", "idn-hostname", "ipv4", "ipv6", "uri", "uri-reference", "iri", "iri-reference"]
-                }
-              },
-              "required": ["type"]
-            }
-          ]
-        },
-        "fallback": {
-          "type": "string",
-        },
-        "label": {
-          "type": "string"
-        }
-      },
-      "required": ["path", "schema", "label"]
-    },
-    {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "text": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        }
-      },
-      "required": ["text", "label"]
-    }
-  ],
-}
+[[insert: ./schemas/labeled-display-mapping-object.json]]
 ```
 :::
 
