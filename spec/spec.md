@@ -52,22 +52,7 @@ _Entity Style Descriptors_ are a resource format that defines a set of suggested
 
 ::: example Basic Example
 ```json
-{
-  "thumbnail": {
-    "uri": "https://dol.wa.com/logo.png",
-    "alt": "Washington State Seal"
-  },
-  "hero": {
-    "uri": "https://dol.wa.com/people-working.png",
-    "alt": "People working on serious things"
-  },
-  "background": {
-    "color": "#ff0000"
-  },
-  "text": {
-    "color": "#d4d400"
-  }
-}
+[[insert: ./test/entity-styles/simple.json]]
 ```
 :::
 
@@ -102,13 +87,7 @@ A _Data Display Descriptor_ ****must**** be an object composed of the following 
 
 :::example Display Mapping Object with path
 ```json
-{
-  "path": ["$.name", "$.vc.name"],
-  "schema": {
-    "type": "string"
-  },
-  "fallback": "Washington State Driver License"
-}
+[[insert: ./test/data-display/display-mapping-object/with-path.json]]
 ```
 :::
 
@@ -143,9 +122,7 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 :::example Display Mapping Object with text
 ```json
-{
-  "text": "Washington State Driver License"
-}
+[[insert: ./test/data-display/display-mapping-object/with-text.json]]
 ```
 :::
 
@@ -164,15 +141,7 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 :::example Labeled Display Mapping Object with path
 ```json
-{
-    "label": "Issuance Date",
-    "path": ["$.issuanceDate", "$.vc.issuanceDate"],
-    "schema": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "fallback": "Unknown"
-}
+[[insert: ./test/data-display/labeled-display-mapping-object/with-path.json]]
 ```
 :::
 
@@ -182,10 +151,7 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 :::example Labeled Display Mapping Object with text
 ```json
-{
-    "label": "Description",
-    "text": "License to operate a vehicle with a gross combined weight rating (GCWR) of 26,001 or more pounds, as long as the GVWR of the vehicle(s) being towed is over 10,000 pounds."
-}
+[[insert: ./test/data-display/labeled-display-mapping-object/with-text.json]]
 ```
 :::
 
@@ -201,9 +167,9 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 ### Vocabulary Definition
 
-The _Presentation Exchange_ specification adopts and defines the following JSON
+The _Wallet Rendering_ specification adopts and defines the following JSON
 Schema data format and processing variant, which implementers ****MUST****
-support for evaluation of the portions of the _Presentation Exchange_
+support for evaluation of the portions of the _Wallet Rendering_
 specification that call for JSON Schema validation:
 https://tools.ietf.org/html/draft-handrews-json-schema-02
 

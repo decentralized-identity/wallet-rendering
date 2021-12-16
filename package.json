@@ -19,7 +19,7 @@
   "scripts": {
     "render": "npm run build",
     "edit": "npm run dev",
-    "test": "echo 'No tests'",
+    "test": "mocha 'test/**/*.js'",
     "build": "npm run clean && npm run resources && npm run build:specs",
     "build:specs": "node -e \"require('spec-up')({ nowatch: true })\"",
     "dev": "npm run clean && npm run resources && npm run dev:specs",
