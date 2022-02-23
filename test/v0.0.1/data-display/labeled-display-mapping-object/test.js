@@ -7,7 +7,7 @@ const ajv = require('ajv');
 describe('Labeled Display Mapping Object', function () {
   describe('JSON Schema', function () {
     it('should validate the example object with "text" using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../schemas/labeled-display-mapping-object.json')));
+      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../../schemas/v0.0.1/labeled-display-mapping-object.json')));
       const data = JSON.parse(fs.readFileSync(__dirname + '/with-text.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
@@ -18,7 +18,7 @@ describe('Labeled Display Mapping Object', function () {
     });
 
     it('should validate the example object with "path" using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../schemas/labeled-display-mapping-object.json')));
+      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../../schemas/v0.0.1/labeled-display-mapping-object.json')));
       const data = JSON.parse(fs.readFileSync(__dirname + '/with-path.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);

@@ -7,7 +7,7 @@ const ajv = require('ajv');
 describe('Entity Styles', function () {
   describe('JSON Schema', function () {
     it('should validate the basic example object using JSON Schema Draft 7', function () {
-      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../schemas/entity-styles.json')));
+      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../schemas/v0.0.1/entity-styles.json')));
       const data = JSON.parse(fs.readFileSync(__dirname + '/simple.json'));
       const jv = new ajv({allErrors: true});
       const validate = jv.compile(schema);
