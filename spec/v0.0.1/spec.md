@@ -2,7 +2,7 @@
 Wallet Rendering v0.0.1
 ==================
 
-**Specification Status:** Strawman
+**Specification Status:** Pre-Draft
 
 **Latest Draft:**
   [identity.foundation/wallet-rendering](https://identity.foundation/wallet-rendering)
