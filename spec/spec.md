@@ -79,11 +79,11 @@ A _Data Display Descriptor_ ****must**** be an object composed of the following 
 - The object ****MAY**** contain a `description` property, and if present, its value ****MUST**** be a [[ref:Display Mapping Object]]. User Agents ****SHOULD**** render the data in an area of UI that is appropreate for verbose, descriptive textual data.
 - The object ****MAY**** contain a `properties` property, and if present, its value ****MUST**** be an array of [[ref:Labeled Display Mapping Objects]]. User Agents ****SHOULD**** render the data specified by each _Display Mapping Object_ in an area of UI that is appropreate for the rendering of a flat list of labeled values.
 
-### Display Mapping Object
+## Display Mapping Object
 
 [[ref:Display Mapping Objects]] can be used to either pull data from the target Claim with the `path` property OR display infomation about the target Claim with the `text` property
 
-#### Using `path`
+### Using `path`
 
 :::example Display Mapping Object with path
 ```json
@@ -98,9 +98,21 @@ A _Data Display Descriptor_ ****must**** be an object composed of the following 
 - The object ****MAY**** contain a `fallback` property and its value ****MUST**** be a string value. This value is to be used to rendered into the UI if all the `path` property's item's value is undefined OR optionally if when the [[ref:Holder]] processes the value and it does not comply with the [type specific configuration](#type-specific-configuration) below.
   - If the `path`'s value does not comply with the [type specific configuration](#type-specific-configuration) below the [[ref:Holder]] may use the raw value OR use the [[ref:Claim]] itself to help figure out the type of the value.
 
-##### Type specific configuration
+#### Type specific configuration
 
-When `schema.type` is set to `"string"` the object ****MAY**** contain a format property. It's value can be one of the following:
+##### "string"
+
+When `schema.type` is set to `"string"` the object ****MAY**** contain an additional set of keywords to describe the string value.
+
+###### Format Set
+
+:::example Display Mapping Object with path and format
+```json
+[[insert: ./test/data-display/display-mapping-object/with-path-and-format.json]]
+```
+:::
+
+If you want to describe the format of the string you ****MAY**** specify a `format` property. It's value can be one of the following:
 
 | Value | Description | Spec |
 | ----- | ----------- | ---- |
@@ -118,7 +130,21 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 | "iri" | The internationalized equivalent of a "uri" | [[spec:rfc3987]] |
 | "iri-reference" | The internationalized equivalent of a "uri-reference" | [[spec:rfc3987]] |
 
-#### Using `text`
+###### Encoding Set
+
+:::example Display Mapping Object with path and encoding
+```json
+[[insert: ./test/data-display/display-mapping-object/with-path-and-encoding.json]]
+```
+:::
+
+If you want to describe the encoding of the string you ****MAY**** specify a `contentMediaType` and `contentEncoding` properties.
+
+- The value of `contentMediaType` ****MUST**** adhere to [[spec:rfc2046]]
+- The value of `contentEncoding` ****MUST**** adhere to [[spec:rfc2045] Part 6.1] and [[spec:rfc4648]]
+  - This property ****MAY**** be omitted if the encoding of the string is the same as the enclosing JSON document
+
+### Using `text`
 
 :::example Display Mapping Object with text
 ```json
@@ -128,7 +154,7 @@ When `schema.type` is set to `"string"` the object ****MAY**** contain a format 
 
 - The object ****MUST**** contain a `text` property and its value ****MUST**** be a string value
 
-### Labeled Display Mapping Object
+## Labeled Display Mapping Object
 
 <tab-panels selected-index="0">
 
