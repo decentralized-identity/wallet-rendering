@@ -56,8 +56,9 @@ _Entity Style Descriptors_ are a resource format that defines a set of suggested
 ```
 :::
 
+An _Entity Style Descriptor_ ****must**** be an object composed in one of the follow ways:
 
-An _Entity Style Descriptor_ ****must**** be an object composed of the following properties:
+### Basic
 
 - The object ****MAY**** contain a `thumbnail` property, and if present, its value ****MUST**** be an object with the following optional properties:
     - The object ****MUST**** contain a `uri` property, and if present its value ****MUST**** be a valid URI string to an image resource.
@@ -69,6 +70,35 @@ An _Entity Style Descriptor_ ****must**** be an object composed of the following
     - The object ****MAY**** contain a `color` property, and if present its value ****MUST**** be a HEX string color value (e.g. #000000).
 - The object ****MAY**** contain a `text` property, and if present, its value ****MUST**** be an object with the following optional properties:
     - The object ****MAY**** contain a `color` property, and if present its value ****MUST**** be a HEX string color value (e.g. #000000).
+- The object ****MAY**** contain a `style_modes` property, and if present, its value ****MUST**** be an array of [ref:Style Mode Objects].
+
+### Light and Dark Mode
+
+::: example Light and Dark Mode
+```json
+[[insert: ./test/entity-styles/simple-light-dark.json]]
+```
+:::
+
+- The object ****MAY**** contain `light` and/or `dark` properties, and if present, their values ****MUST**** be Basic Entity Style Descriptors
+
+## Entity Style Modes
+
+::: example Modes
+```json
+[[insert: ./test/entity-styles/simple-light-dark.json]]
+```
+:::
+
+A _Entity Style Mode_ ****must**** be an object composed of the following properties:
+
+- The object ****MUST**** contain a `mode` property and its value ****MUST**** be a string
+  - This string ****MUST**** be unique within the containing `style_modes` array
+- The object ****MUST**** contain a `styles` property and its value ****MUST**** be a [ref:Entity Style Descriptor] omitting the `style_modes` property
+
+### Applying Modes
+
+When a style mode its `styles` property ****MUST**** be merged with its containing [ref:Entity Style Descriptor]
 
 ## Data Display
 

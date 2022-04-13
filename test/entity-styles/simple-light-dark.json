@@ -1,0 +1,34 @@
+{
+  "light": {
+    "thumbnail": {
+      "uri": "https://dol.wa.com/logo.png",
+      "alt": "Washington State Seal"
+    },
+    "hero": {
+      "uri": "https://dol.wa.com/people-working.png",
+      "alt": "People working on serious things"
+    },
+    "background": {
+      "color": "#ff0000"
+    },
+    "text": {
+      "color": "#d4d400"
+    }
+  },
+  "dark": {
+    "thumbnail": {
+      "uri": "https://dol.wa.com/logo-alt.png",
+      "alt": "Washington State Seal"
+    },
+    "hero": {
+      "uri": "https://dol.wa.com/people-working-alt.png",
+      "alt": "People working on serious things"
+    },
+    "background": {
+      "color": "#00FFFF"
+    },
+    "text": {
+      "color": "#0000D4"
+    }
+  }
+}
