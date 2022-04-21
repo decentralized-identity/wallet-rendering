@@ -27,5 +27,27 @@ describe('Labeled Display Mapping Object', function () {
       assert.equal(null, validate.errors);
       assert.equal(true, valid);
     });
+
+    it('should validate the example object with "path" and "format" using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../schemas/labeled-display-mapping-object.json')));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/with-path-and-format.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
+
+    it('should validate the example object with "path", encoding, and media type using JSON Schema Draft 7', function () {
+      const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/../../../schemas/labeled-display-mapping-object.json')));
+      const data = JSON.parse(fs.readFileSync(__dirname + '/with-path-and-encoding.json'));
+      const jv = new ajv({allErrors: true});
+      const validate = jv.compile(schema);
+      const valid = validate(data);
+
+      assert.equal(null, validate.errors);
+      assert.equal(true, valid);
+    });
   });
 });

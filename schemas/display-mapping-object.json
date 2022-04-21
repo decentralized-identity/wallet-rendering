@@ -24,19 +24,41 @@
               "required": ["type"]
             },
             {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "enum": ["string"]
+              "anyOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["string"]
+                    },
+                    "format": {
+                      "type": "string",
+                      "enum": ["date-time", "time", "date", "email", "idn-email", "hostname", "idn-hostname", "ipv4", "ipv6", "uri", "uri-reference", "iri", "iri-reference"]
+                    }
+                  },
+                  "required": ["type"]
                 },
-                "format": {
-                  "type": "string",
-                  "enum": ["date-time", "time", "date", "email", "idn-email", "hostname", "idn-hostname", "ipv4", "ipv6", "uri", "uri-reference", "iri", "iri-reference"]
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["string"]
+                    },
+                    "contentEncoding": {
+                      "type": "string",
+                      "enum": ["7bit", "8bit", "binary", "quoted-printable", "base16", "base32", "base64"]
+                    },
+                    "contentMediaType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["type"]
                 }
-              },
-              "required": ["type"]
+              ]
             }
           ]
         },

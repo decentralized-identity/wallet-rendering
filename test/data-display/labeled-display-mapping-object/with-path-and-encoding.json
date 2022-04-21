@@ -1,0 +1,10 @@
+{
+  "label": "Front of License",
+  "path": ["$.frontImage", "$.vc.frontImage"],
+  "schema": {
+    "type": "string",
+    "contentEncoding": "base64",
+    "contentMediaType": "image/png"
+  },
+  "fallback": "No Image"
+}

@@ -1,0 +1,8 @@
+{
+  "path": ["$.birthDate", "$.vc.birthDate"],
+  "schema": {
+    "type": "string",
+    "format": "date"
+  },
+  "fallback": "Birth Date Unknown"
+}
