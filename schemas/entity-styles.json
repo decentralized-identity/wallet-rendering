@@ -1,8 +1,55 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Entity Styles",
-  "type": "object",
   "definitions": {
+    "styles": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thumbnail": {
+          "$ref": "#/definitions/image"
+        },
+        "hero": {
+          "$ref": "#/definitions/image"
+        },
+        "background": {
+          "$ref": "#/definitions/color"
+        },
+        "text": {
+          "$ref": "#/definitions/color"
+        },
+        "style_modes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": { "type": "string" },
+              "styles": { "$ref": "#/definitions/nestedStyles" }
+            },
+            "required": ["mode", "styles"]
+          }
+        }
+      }
+    },
+    "nestedStyles": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thumbnail": {
+          "$ref": "#/definitions/image"
+        },
+        "hero": {
+          "$ref": "#/definitions/image"
+        },
+        "background": {
+          "$ref": "#/definitions/color"
+        },
+        "text": {
+          "$ref": "#/definitions/color"
+        }
+      }
+    },
     "image": {
       "type": "object",
       "properties": {
@@ -27,18 +74,16 @@
       "required": ["color"]
     }
   },
-  "properties": {
-    "thumbnail": {
-      "$ref": "#/definitions/image"
-    },
-    "hero": {
-      "$ref": "#/definitions/image"
-    },
-    "background": {
-      "$ref": "#/definitions/color"
-    },
-    "text": {
-      "$ref": "#/definitions/color"
+  "oneOf": [
+    { "$ref": "#/definitions/styles" },
+    {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "light": { "$ref": "#/definitions/styles" },
+        "dark": { "$ref": "#/definitions/styles" }
+      }
     }
-  }
+  ]
 }
